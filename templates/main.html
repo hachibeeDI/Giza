@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="withjinja">
   <head>
     <!-- meta -->
     <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
@@ -19,31 +19,36 @@
     <title>Sphinx Editor</title>
   </head>
   <body>
-    <section id="main-content">
-      <section id="main">
-        <div class="header" role="header">
-          <h1 class="title">Edit</h1>
-          <input type="text" id="entry-id">
-          <button type="button" id="btn-build">click to build</button>
-
-          <div id="build-result"></div>
-        </div>
-      </section>
+    <section ng-controller="EntryController as entry" id="main-content">
       <section id="sub">
         <div class="header" role="header">
           <h1 class="title">sub</h1>
           <!-- 後でangluarで書き直す -->
           <ul>
             {% for project in projects %}
-            <li class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
+            <li ng-click="$scope.entry_id = {{project.id}}; chose_id({{project.id}})" class="project toggl)" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
             {% endfor %}
           </ul>
+        </div>
+      </section> <!-- id: sub -->
+
+      <section id="main">
+        <div class="header" role="header">
+          <h1 class="title">Edit</h1>
+          <!-- TODO: 数字を表示してもしゃあないので、ここはいい感じのなんかにする -->
+          <p id="entry-id">[[entry_id]]</p>
+          <button type="button" id="btn-build">click to build</button>
+
+          <div id="build-result"></div>
         </div>
       </section>
     </section>
 
     <footer id="footer"></footer>
 
+    <!-- <script type="text/javascript" src="/static/components/angular/angular.min.js"> 本番ではminified使う -->
+    <script type="text/javascript" src="/static/components/angular/angular.js"></script>
+    <!-- <script type="text/javascript" src="/static/components/angular-route/angular-route.min.js"></script> -->
     <script type="text/javascript">
       var do_build = function () {
         var xhr = new XMLHttpRequest();
@@ -63,21 +68,7 @@
           xhr.send(data);
       };
       document.getElementById('btn-build').addEventListener('click', do_build);
-
-
-      var select_buildtarget = function() {
-        var input_field = document.getElementById('entry-id');
-        var projct_lists = document.querySelectorAll('.project');
-        var _put_id_on_field = function() {
-          var id = this.dataset.id;
-          input_field.value = '' + id;
-        };
-        for (var i=0; i < projct_lists.length; ++i) {
-          var project = projct_lists[i];
-          project.addEventListener('click', _put_id_on_field.bind(project));
-        }
-      };
-      select_buildtarget();
     </script>
+    <script type="text/javascript" src="/static/main.js"></script>
   </body>
 </html>
