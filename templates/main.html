@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- meta -->
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="ja">
+    <meta http-equiv="content-style-type" content="text/css">
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <meta name=author content="OGURA_Daiki">
+    <meta name=generator content="Vim">
+    <meta name=robots content="index,follow">
+    <!-- via:https://developers.google.com/speed/docs/insights/ConfigureViewport -->
+    <meta name=viewport content="width=device-width,initial-scale=1.0">
+    <!-- meta -->
+
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" type="text/css">
+
+    <title>Sphinx Editor</title>
+  </head>
+  <body>
+    <section id="main-content">
+      <section id="main">
+        <div class="header" role="header">
+          <h1 class="title">Edit</h1>
+          <input type="text" id="entry-id">
+          <button type="button" id="btn-build">click to build</button>
+
+          <div id="build-result"></div>
+        </div>
+      </section>
+      <section id="sub">
+        <div class="header" role="header">
+          <h1 class="title">sub</h1>
+          <!-- 後でangluarで書き直す -->
+          <ul>
+            {% for project in projects %}
+            <li class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <footer id="footer"></footer>
+
+    <script type="text/javascript">
+      var do_build = function () {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          var READYSTATE_COMPLETED = 4;
+          var HTTP_STATUS_OK = 200;
+          if (xhr.readyState == READYSTATE_COMPLETED && xhr.status == HTTP_STATUS_OK) {
+            // レスポンスの表示
+            document.getElementById('build-result').innerText = xhr.responseText;
+          }
+        }
+        var build_id = document.getElementById('entry-id').value;
+        xhr.open('GET', '/build/' + build_id);
+        // サーバに対して解析方法を指定する
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var data = null
+          xhr.send(data);
+      };
+      document.getElementById('btn-build').addEventListener('click', do_build);
+
+
+      var select_buildtarget = function() {
+        var input_field = document.getElementById('entry-id');
+        var projct_lists = document.querySelectorAll('.project');
+        var _put_id_on_field = function() {
+          var id = this.dataset.id;
+          input_field.value = '' + id;
+        };
+        for (var i=0; i < projct_lists.length; ++i) {
+          var project = projct_lists[i];
+          project.addEventListener('click', _put_id_on_field.bind(project));
+        }
+      };
+      select_buildtarget();
+    </script>
+  </body>
+</html>
