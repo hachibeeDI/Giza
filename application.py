@@ -2,60 +2,104 @@
 from __future__ import (print_function, division, absolute_import, unicode_literals, )
 
 
+'''
+TODO: あまりにも操作が多くなるようならblueprintを使う or 別のフレームワークで書き直す
+'''
+
+
 import sys
-from os import (path, environ, listdir, )
-from collections import namedtuple
+from os import (environ, )
 
 if 'SPHINXBUILD' not in environ:
     print('you should assign $SPHINXBUILD')
     sys.exit(2)
 
-from flask import (Flask, render_template, jsonify, )
+from flask import (Flask, Response, render_template, jsonify, request, )
+
+
+from sphinx_op import build as sphinx_build
+from models.project import Projects
 
 
 app = Flask(__name__)
 
-#               FIXME: for tests.
-PROJECTS_ROOT = path.dirname(path.abspath(__file__))
-PATH_TO_PROJECT = 'projects'
-
-
-# TODO: ここは後でSQLAlchemyのモデルとして定義する
-Project = namedtuple('Project', 'id name')
-def _get_projects():
-    return [Project(i, name) for i, name in enumerate(listdir(path.join(PROJECTS_ROOT, PATH_TO_PROJECT)))]
-
 
 @app.route("/")
 def index():
-    # TODO: ◆予定◆ ここは実際sqlな ◆実現可能性◆
-    projects = _get_projects()
-    return render_template('main.html', projects=projects)
+    projects = Projects()
+    return render_template('main.html', projects=projects.get_all())
 
 
 @app.route("/build/<int:entry_id>")
 def build(entry_id):
-    # make_mainを呼び出そうかと考えたが、それだと初期設定の反映のためにMakefileの
-    # パースが必要になるのでやめた。
-    # from sphinx import main, make_main
-    import subprocess
-    target_task = 'html'
-    projects = _get_projects()
-    # TODO: SQLな
-    target_project = ''.join([proj.name for proj in projects if proj.id == entry_id])
-    if not target_project:
-        return 'Invalid id'
-    p = subprocess.Popen('cd {0}/{1}/{2}; make {3}'.format(PROJECTS_ROOT, PATH_TO_PROJECT, target_project, target_task, ),
-                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    out = p.stdout.read()
-    err = p.stderr.read()
-    return out + err
+    result, err = sphinx_build(project_id=entry_id)
+    return Response(result + '\n' + err, mimetype='text/plain')
 
 
-@app.route("/entries")
+@app.route("/entries", methods=['GET', 'POST'])
 def get_entries():
+    '''
+    # 'GET'
+        You can get all entries is controlled.
+
+    .. highlight:: json
+        {
+            'entries': [
+                {
+                    'id': 1,
+                    'name': 'foo'
+                },
+            ]
+        }
+
+
+    # 'POST'
+        You can create new Sphinx project.
+        TODO: add certification
+
+    ## CONTENT
+
+    .. NOTE::
+        you should refer the usage of command names `sphinx-quickstart`
+
+    - require
+        - Project Name
+        - Version
+        - Author Name
+    - optional
+        - Separate?
+        - Prefix
+        - Relarse Version (default is same as Version)
+        ... ...
+    '''
+    def GET():
+        projects = Projects()
+        jsonify(
+            {'entries': [proj._asdict() for proj in projects.get()]}
+        )
+
+    def POST():
+        posted_params = request.json
+
+    if request.method == 'GET':
+        return GET()
+    elif request.method == 'POST':
+        return POST()
+
+
+@app.route("/entry", methods=['GET', 'POST'])
+def create_entries():
+    '''
+    - 'GET'
+
+
+    .. highlight:: json
+        {
+            'id': 1,
+            'name': 'hoge',
+        }
+    '''
     return jsonify(
-        {'entries': [proj._asdict() for proj in _get_projects()]}
     )
 
 
