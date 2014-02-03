@@ -26,7 +26,7 @@
           <!-- 後でangluarで書き直す -->
           <ul>
             {% for project in projects %}
-            <li ng-click="chose_id({{project.id}})" class="project toggl" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
+            <li ng-click="chose_id({{project.id}})" class="project toggle" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
             {% endfor %}
           </ul>
         </div>
