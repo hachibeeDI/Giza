@@ -10,7 +10,7 @@ if 'SPHINXBUILD' not in environ:
     print('you should assign $SPHINXBUILD')
     sys.exit(2)
 
-from flask import (Flask, render_template, )
+from flask import (Flask, render_template, jsonify, )
 
 
 app = Flask(__name__)
@@ -50,6 +50,13 @@ def build(entry_id):
     out = p.stdout.read()
     err = p.stderr.read()
     return out + err
+
+
+@app.route("/entries")
+def get_entries():
+    return jsonify(
+        {'entries': [proj._asdict() for proj in _get_projects()]}
+    )
 
 
 if __name__ == "__main__":
