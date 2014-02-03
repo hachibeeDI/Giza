@@ -1,6 +1,7 @@
+@import "nib/vendor"
 @import "normalize"
 
-white = #F5D3CE
+white = #FCF2ED
 black = #210001
 color-second-base = #FF8B79
 color-accent = #DF1D0D
@@ -49,6 +50,31 @@ li
   list-style-type: none
   letter-spacing: 0.1rem
   border-bottom: solid 1px white
+
+
+//a
+//  &:link
+//    color: color-base-text
+//  &:visited
+//    color: color-base-text
+//  &:hover
+//    color: color-linkhover
+//  &:active
+//    color: color-brown
+
+
+button
+  font-size-em 1.5
+  padding: 8px 20px
+  background-color: color-middle
+  color: white
+  font-weight: bold
+  border: solid 1px white
+  &:hover
+    //color: color-linkhover
+  &:active
+    // FIXME: not cool
+    background-color: lighten(color-middle, 30%)
 
 
 #main-content
