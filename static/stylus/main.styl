@@ -8,7 +8,7 @@ color-accent = #DF1D0D
 color-high = #D12B13
 color-middle = #FF4E0D
 
-footer-height: 150px
+footer-height = 150px
 
 
 font-size-em(font_size)
@@ -28,7 +28,7 @@ body
   background-color: black
   color: #FF4E0D
 
-  font-size-em 18
+  font-size-em 1.7
 
 
 h1
@@ -42,13 +42,19 @@ h2
   margin: 15px 0 10px 0
 
 h3
-  font-size-em 1.8
+  font-size-em 2.0
+
+
+ul
+  padding-left: 0  // clear default indent
+  margin: 20px 0
 
 
 li
-  line-height: 2.7rem
+  font-size-em 1.7
+  line-height: 2.5rem
   list-style-type: none
-  letter-spacing: 0.1rem
+  letter-spacing: 0.2rem
   border-bottom: solid 1px white
 
 
@@ -75,6 +81,14 @@ button
   &:active
     // FIXME: not cool
     background-color: lighten(color-middle, 30%)
+
+
+.header
+  .title
+    font-size-em 4.2
+
+#target-projects
+  margin-left: 20px
 
 
 #main-content
