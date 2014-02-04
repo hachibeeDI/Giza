@@ -18,7 +18,7 @@ class Project(object):
         # TODO: 名前の重複が出来ないのはダサいので複数のプロジェクトルートを持てるようにする
         self._root = path.abspath(path.join(PROJECTS_ROOT, PATH_TO_PROJECT, name))
 
-    def as_tree(self):
+    def files_as_tree(self):
         IGNORE_DIRS = [path.join(self._root, d) for d in ['build', '_build']]
 
         ret = []

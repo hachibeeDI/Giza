@@ -96,13 +96,28 @@ def edit_entry(entry_id):
         '''
         get all information of project
         '''
-        targ = Projects().get(entry_id)[0].as_tree()
-        return jsonify(target=targ)
+        targ = Projects().get(entry_id)[0]
+        return jsonify(
+            id=targ.id,
+            name=targ.name,
+            files=targ.files_as_tree()
+        )
 
     def POST():
         '''
         add or edit file contained in project
         '''
+        targ = Projects().get(entry_id)[0]
+        file_path = request.json['filepath']
+        full_path = [path for path in targ.files_as_tree() if path.endswith(file_path)][0]
+        with open(full_path, 'r') as f:
+            content = f.read()
+        return jsonify({
+            'id': targ.id,
+            'name': targ.name,
+            'filepath': file_path,
+            'content': content,
+        })
 
     if request.method == 'GET':
         return GET()
