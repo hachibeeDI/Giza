@@ -41,9 +41,11 @@
         </header>
           <!-- TODO: 数字を表示してもしゃあないので、ここはいい感じのなんかにする -->
           <p id="entry-id">[[entry_id]]</p>
+          <!-- TODO: こういったところはdirectiveという機能を利用してやるのが作法らしい -->
           <ul id="project_files">
           </ul>
           <button ng-click="do_build()" type="button" id="btn-build">click to build</button>
+          <button ng-click="show_content()" type="button" id="btn-shotcontent">click to show</button>
 
           <pre id="build-result">[[build_result]]</pre>
       </section>
@@ -55,5 +57,6 @@
     <script type="text/javascript" src="/static/components/angular/angular.js"></script>
     <!-- <script type="text/javascript" src="/static/components/angular-route/angular-route.min.js"></script> -->
     <script type="text/javascript" src="/static/main.js"></script>
+    <script type="text/javascript" src="/static/model.js"></script>
   </body>
 </html>
