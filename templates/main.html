@@ -15,6 +15,22 @@
     <!-- meta -->
 
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" type="text/css">
+    <style type="text/css" media="screen">
+      #editor-container {
+        position: relative;
+        width: 90%;
+        min-height: 800px;
+      }
+      #editor {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        font-size: 1.8em;
+        font-size: 1.8rem;
+      }
+    </style>
 
     <title>Sphinx Editor</title>
   </head>
@@ -28,7 +44,7 @@
           <nav id="target-projects">
             <ul>
               {% for project in projects %}
-              <li ng-click="chose_id({{project.id}}, '{{project.name}}')" class="project toggle" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
+              <li ng-click="chose_id({{project.id}}, '{{project.name}}')" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
               {% endfor %}
             </ul>
           </nav>
@@ -46,8 +62,11 @@
           </ul>
           <button ng-click="do_build()" type="button" id="btn-build">click to build</button>
           <button ng-click="show_content()" type="button" id="btn-shotcontent">click to show</button>
-
           <pre id="build-result">[[build_result]]</pre>
+          <h2>Editor</h2>
+          <section id="editor-container">
+            <div id="editor"></div>
+          </section>
       </section>
     </section>
 
@@ -58,5 +77,11 @@
     <!-- <script type="text/javascript" src="/static/components/angular-route/angular-route.min.js"></script> -->
     <script type="text/javascript" src="/static/main.js"></script>
     <script type="text/javascript" src="/static/model.js"></script>
+    <script type="text/javascript" src="/static/components/ace/build/src/ace.js"></script>
+    <script>
+      var $editor = ace.edit("editor");
+      $editor.setTheme("ace/theme/monokai");
+      $editor.getSession().setMode("ace/mode/python");
+    </script>
   </body>
 </html>

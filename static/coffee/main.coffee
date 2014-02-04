@@ -43,8 +43,7 @@ myapp.controller('EntryController',
     $scope.show_content = () ->
       projectService.get_content('0', 'sample/source/conf.py')
         .then((result) -> 
-          console.log result
-          $scope.build_result = result.data.content
+          $editor.getSession().setValue(result.data.content)
         )
 
     END
