@@ -2,15 +2,34 @@
 from __future__ import (print_function, division, absolute_import, unicode_literals, )
 
 
-from os import (path, listdir, )
-from collections import namedtuple
-
+from os import (path, listdir, walk, )
 
 from env import (PROJECTS_ROOT, PATH_TO_PROJECT, )
 
 
-# TODO: ここは後でSQLAlchemyのモデルとして定義する
-Project = namedtuple('Project', 'id name')
+class Project(object):
+    '''
+    TODO: ここは後でSQLAlchemyのモデルとして定義する
+    '''
+
+    def __init__(self, entry_id, name):
+        self.id = entry_id
+        self.name = name
+        # TODO: 名前の重複が出来ないのはダサいので複数のプロジェクトルートを持てるようにする
+        self._root = path.abspath(path.join(PROJECTS_ROOT, PATH_TO_PROJECT, name))
+
+    def as_tree(self):
+        IGNORE_DIRS = [path.join(self._root, d) for d in ['build', '_build']]
+
+        ret = []
+        yield_ret = ret.append
+        for root, dirs, files in walk(self._root):
+            for f in files:
+                if any(f.startswith(ignore) for ignore in IGNORE_DIRS):
+                    continue
+                if f.endswith(".rst") or f.endswith(".py"):
+                    yield_ret(path.join(root, f))
+        return ret
 
 
 class Projects(object):

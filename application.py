@@ -74,12 +74,15 @@ def get_entries():
     '''
     def GET():
         projects = Projects()
-        jsonify(
-            {'entries': [proj._asdict() for proj in projects.get()]}
+        return jsonify(
+            {'entries': [proj._asdict() for proj in projects.get_all()]}
         )
 
     def POST():
-        posted_params = request.json
+        # REQUIRE_PARAMS = ['project_name', 'version', 'author_name', ]
+        # posted_params = request.json
+        # if any(param for param in REQUIRE_PARAMS if param not in posted_params):
+        return jsonify(err='implementaition is pending.')
 
     if request.method == 'GET':
         return GET()
@@ -87,20 +90,25 @@ def get_entries():
         return POST()
 
 
-@app.route("/entry", methods=['GET', 'POST'])
-def create_entries():
-    '''
-    - 'GET'
+@app.route('/entry/<int:entry_id>', methods=['GET', 'POST'])
+def edit_entry(entry_id):
+    def GET():
+        '''
+        get all information of project
+        '''
+        targ = Projects().get(entry_id)[0].as_tree()
+        return jsonify(target=targ)
 
+    def POST():
+        '''
+        add or edit file contained in project
+        '''
 
-    .. highlight:: json
-        {
-            'id': 1,
-            'name': 'hoge',
-        }
-    '''
-    return jsonify(
-    )
+    if request.method == 'GET':
+        return GET()
+    elif request.method == 'POST':
+        return POST()
+
 
 
 if __name__ == "__main__":

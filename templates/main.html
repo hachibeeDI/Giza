@@ -21,26 +21,31 @@
   <body>
     <section ng-controller="EntryController as entry" id="main-content">
       <section id="sub">
-        <div class="header" role="header">
-          <h1 class="title">sub</h1>
+        <header class="header" role="header">
+          <h1 class="title">Projects</h1>
+        </header>
           <!-- 後でangluarで書き直す -->
-          <ul>
-            {% for project in projects %}
-            <li ng-click="chose_id({{project.id}})" class="project toggle" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
-            {% endfor %}
-          </ul>
-        </div>
+          <nav id="target-projects">
+            <ul>
+              {% for project in projects %}
+              <li ng-click="chose_id({{project.id}}, '{{project.name}}')" class="project toggle" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
+              {% endfor %}
+            </ul>
+          </nav>
       </section> <!-- id: sub -->
 
       <section id="main">
-        <div class="header" role="header">
+        <header class="header" role="header">
           <h1 class="title">Edit</h1>
+          <h2>[[entry_name]]</h2>
+        </header>
           <!-- TODO: 数字を表示してもしゃあないので、ここはいい感じのなんかにする -->
           <p id="entry-id">[[entry_id]]</p>
+          <ul id="project_files">
+          </ul>
           <button ng-click="do_build()" type="button" id="btn-build">click to build</button>
 
           <pre id="build-result">[[build_result]]</pre>
-        </div>
       </section>
     </section>
 
