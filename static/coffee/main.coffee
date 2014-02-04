@@ -2,14 +2,14 @@
 
 END = null
 
-myapp = angular.module('withjinja', [])
+@myapp = angular.module('withjinja', [])
 # solve conflict between Jinja2 and AngularJs
 myapp.config ($interpolateProvider) ->
   $interpolateProvider.startSymbol '[['
   $interpolateProvider.endSymbol ']]'
 
-myapp.controller('EntryController', ['$scope', '$http'
-  ($scope, $http) ->
+myapp.controller('EntryController',
+  ($scope, $http, projectService) ->
     $scope.entry_id = ''
     $scope.entry_name = ''
     $scope.build_result = ''
@@ -20,37 +20,33 @@ myapp.controller('EntryController', ['$scope', '$http'
       '''
       if not(entry_id == 0 or entry_id) then return
 
-      $scope.entry_id = entry_id
-      $scope.entry_name = entry_name
-      $http
-        method: 'GET'
-        url: '/entry/' + $scope.entry_id  # urljoinみたいなのある？
-        params: {}
-      .success (data, status, headers, config) ->
+      project = projectService.get_project(entry_id)
+      project.then (result) ->
+        data = result.data
+        $scope.entry_id = data.id
+        $scope.entry_name = data.name
+
         file_holder = document.getElementById 'project_files'
         file_holder.innerHTML = ''
-        console.log data
-        for content in data.target
+        for content in data.files
           child = document.createElement('li')
           child.innerText = content
           file_holder.appendChild(child)
-      .error (data, status, headers, config) ->
-        alert('error!')
-        console.log data
-        #$scope.build_result = data
+        END
+
 
     $scope.do_build = () ->
       if angular.isNumber $scope.entry_id then return
+      $scope.build_result = projectService.build($scope.entry_id)
 
-      $http
-        method: 'GET'
-        url: '/build/' + $scope.entry_id  # urljoinみたいなのある？
-        params: {}
-      .success (data, status, headers, config) ->
-        $scope.build_result = data
-      .error (data, status, headers, config) ->
-        $scope.build_result = data
+
+    $scope.show_content = () ->
+      projectService.get_content('0', 'sample/source/conf.py')
+        .then((result) -> 
+          console.log result
+          $scope.build_result = result.data.content
+        )
+
     END
-  ]
 )
 
