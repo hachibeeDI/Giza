@@ -35,7 +35,7 @@
     <title>Sphinx Editor</title>
   </head>
   <body>
-    <section ng-controller="EntryController as entry" id="main-content">
+    <section ng-controller="EntryCtrl as entry" id="main-content">
       <section id="sub">
         <header class="header" role="header">
           <h1 class="title">Projects</h1>
@@ -44,7 +44,7 @@
           <nav id="target-projects">
             <ul>
               {% for project in projects %}
-              <li ng-click="chose_id({{project.id}}, '{{project.name}}')" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
+              <li ng-click="chose_id({{project.id}})" class="project toggle" data-id="{{project.id}}" data-name="{{project.name}}">{{project.name}}</li>
               {% endfor %}
             </ul>
           </nav>
@@ -53,15 +53,16 @@
       <section id="main">
         <header class="header" role="header">
           <h1 class="title">Edit</h1>
-          <h2>[[entry_name]]</h2>
+          <h2>[[current_project.name]]</h2>
         </header>
           <!-- TODO: 数字を表示してもしゃあないので、ここはいい感じのなんかにする -->
-          <p id="entry-id">[[entry_id]]</p>
+          <p id="entry-id">[[current_project.id]]</p>
           <!-- TODO: こういったところはdirectiveという機能を利用してやるのが作法らしい -->
-          <ul id="project_files">
+          <ul id="project_files" ng-repeat="current_file in current_project.files">
+            <li>[[current_file]]</li>
           </ul>
           <button ng-click="do_build()" type="button" id="btn-build">click to build</button>
-          <button ng-click="show_content()" type="button" id="btn-shotcontent">click to show</button>
+          <button ng-click="show_content()" type="button" id="btn-showcontent">click to show</button>
           <pre id="build-result">[[build_result]]</pre>
           <h2>Editor</h2>
           <section id="editor-container">
