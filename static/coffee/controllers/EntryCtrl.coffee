@@ -5,8 +5,12 @@ myapp.controller('EntryCtrl',
   ($scope, $http, projectService) ->
     $scope.current_project = null
     $scope.build_result = ''
+    $scope.selected_file = {
+      name: ''
+      content: ''
+    }
 
-    $scope.chose_id = (entry_id) ->
+    @chose_id = (entry_id) ->
       '''
       get entry informations
       TODO: cache function
@@ -19,13 +23,13 @@ myapp.controller('EntryCtrl',
         $scope.current_project = data
 
 
-    $scope.do_build = () ->
+    @do_build = () ->
       if angular.isNumber $scope.entry_id then return
       $scope.build_result = projectService.build($scope.entry_id)
 
 
-    $scope.show_content = () ->
-      projectService.get_content('0', 'sample/source/conf.py')
+    @show_content = (id, file_path) ->
+      projectService.get_content(id, file_path)
         .then((result) ->
           $editor.getSession().setValue(result.data.content)
         )
