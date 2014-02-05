@@ -31,7 +31,10 @@ myapp.controller('EntryCtrl',
     @show_content = (id, file_path) ->
       projectService.get_content(id, file_path)
         .then((result) ->
-          $editor.getSession().setValue(result.data.content)
+          $scope.selected_file = {
+            name: result.data.filepath.toString()
+            content: result.data.content
+          }
         )
 
     END
