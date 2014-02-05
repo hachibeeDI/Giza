@@ -100,7 +100,7 @@ def edit_entry(entry_id):
         return jsonify(
             id=targ.id,
             name=targ.name,
-            files=targ.files_as_tree()
+            files=targ.files_path_as_tree()
         )
 
     def POST():
@@ -109,7 +109,7 @@ def edit_entry(entry_id):
         '''
         targ = Projects().get(entry_id)[0]
         file_path = request.json['filepath']
-        full_path = [path for path in targ.files_as_tree() if path.endswith(file_path)][0]
+        full_path = [path for path in targ.full_files_path_as_tree() if path.endswith(file_path)][0]
         with open(full_path, 'r') as f:
             content = f.read()
         return jsonify({

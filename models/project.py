@@ -18,10 +18,13 @@ class Project(object):
         # TODO: 名前の重複が出来ないのはダサいので複数のプロジェクトルートを持てるようにする
         self._root = path.abspath(path.join(PROJECTS_ROOT, PATH_TO_PROJECT, name))
 
-    def files_as_tree(self):
+    def files_path_as_tree(self):
+        my_root_dir = self._root
+        return [pth.replace(my_root_dir, '') for pth in self.full_files_path_as_tree()]
+
+    def full_files_path_as_tree(self):
         IGNORE_DIRS = [path.join(self._root, d) for d in ['build', '_build']]
 
-        my_root_dir = self._root
         ret = []
         yield_ret = ret.append
         for root, dirs, files in walk(self._root):
@@ -30,7 +33,7 @@ class Project(object):
                     continue
                 if f.endswith(".rst") or f.endswith(".py"):
                     yield_ret(
-                        path.join(root, f).replace(my_root_dir, ''))
+                        path.join(root, f))
         return ret
 
 
