@@ -21,6 +21,7 @@ class Project(object):
     def files_as_tree(self):
         IGNORE_DIRS = [path.join(self._root, d) for d in ['build', '_build']]
 
+        my_root_dir = self._root
         ret = []
         yield_ret = ret.append
         for root, dirs, files in walk(self._root):
@@ -28,7 +29,8 @@ class Project(object):
                 if any(f.startswith(ignore) for ignore in IGNORE_DIRS):
                     continue
                 if f.endswith(".rst") or f.endswith(".py"):
-                    yield_ret(path.join(root, f))
+                    yield_ret(
+                        path.join(root, f).replace(my_root_dir, ''))
         return ret
 
 
