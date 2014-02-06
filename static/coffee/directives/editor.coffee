@@ -2,7 +2,7 @@
 
 myapp.directive('aceEditor', () ->
   return {
-    template: '<div id="editor-container"><div id="editor"></div></div>'
+    templateUrl: 'static/templates/aceEditor.html'
     replace: true
     restrict: 'E'
     scope: true  # current_file だけ取り入れる方法がうまくいかねえ
