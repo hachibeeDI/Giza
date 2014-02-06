@@ -2,13 +2,10 @@
 END = null
 
 myapp.controller('EntryCtrl',
-  ($scope, $http, projectService) ->
+  ($scope, $http, projectService, currentEditingTarget) ->
     $scope.current_project = null
     $scope.build_result = ''
-    $scope.selected_file = {
-      name: ''
-      content: ''
-    }
+    $scope.selected_file = currentEditingTarget
 
     @chose_id = (entry_id) ->
       '''
@@ -31,10 +28,9 @@ myapp.controller('EntryCtrl',
     @show_content = (id, file_path) ->
       projectService.get_content(id, file_path)
         .then((result) ->
-          $scope.selected_file = {
-            name: result.data.filepath.toString()
-            content: result.data.content
-          }
+          $scope.selected_file.id = id
+          $scope.selected_file.name = result.data.filepath.toString()
+          $scope.selected_file.content = result.data.content
         )
 
     END

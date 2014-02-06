@@ -7,8 +7,17 @@ class Project
     @files = files
 
 
+myapp.factory('currentEditingTarget', () ->
+  id: null
+  name: ''
+  content: ''
+  headingMessage: ''
+  detailsMessage: ''
+)
+
+
 # 全体的にエラー時の処理がない感じのアレなので後でどうにかする
-@myapp.service('projectService',
+myapp.service('projectService',
   ($http) ->
     @build = (id) ->
       if not(id == 0 or id) then return 'error'

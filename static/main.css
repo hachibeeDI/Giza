@@ -37,21 +37,25 @@ input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit
 button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
 textarea{overflow:auto;vertical-align:top;}
 table{border-collapse:collapse;border-spacing:0}
-footer-height: 150px,font-size-em(font_size){font-size:font_size em;font-size:font_size rem}
 html,body{width:100%;height:100%;font-family:'Lucida Grande','Hiragino Kaku Gothic ProN',Meiryo,sans-serif}
 html{font-size:62.5%}
-body{background-color:#210001;color:#ff4e0d;font-size-em:18}
-h1{font-size-em:3.8;line-height:4rem}
-h2{font-size-em:2.9;line-height:2.5rem;margin:15px 0 10px 0}
-h3{font-size-em:1.8}
-li{line-height:2.7rem;list-style-type:none;letter-spacing:.1rem;border-bottom:solid 1px #fcf2ed}
-button{font-size-em:1.5;padding:8px 20px;background-color:#ff4e0d;color:#fcf2ed;font-weight:bold;border:solid 1px #fcf2ed;}
+body{background-color:#210001;color:#ff4e0d;font-size:1.7em;font-size:1.7rem}
+h1{font-size:3.8em;font-size:3.8rem;line-height:4rem}
+h2{font-size:2.9em;font-size:2.9rem;line-height:2.5rem;margin:15px 0 10px 0}
+h3{font-size:2em;font-size:2rem}
+ul{padding-left:0;margin:20px 0}
+li{font-size:1.7em;font-size:1.7rem;line-height:2.5rem;list-style-type:none;letter-spacing:.2rem;border-bottom:solid 1px #fcf2ed}
+button{font-size:1.5em;font-size:1.5rem;padding:8px 20px;background-color:#ff4e0d;color:#fcf2ed;font-weight:bold;border:solid 1px #fcf2ed;}
 button:active{background-color:#ff8356}
+.header .title{font-size:4.2em;font-size:4.2rem}
+#target-projects{margin-left:20px}
 #main-content{min-width:320px;width:100%;height:auto !important;min-height:100%;overflow:hidden;position:relative}
 #main{margin:0 auto;width:70%;float:right}
 #sub{margin:0 auto 0 30px;width:20%;float:left;background-color:#d12b13;color:#fcf2ed;padding-bottom:10000px;margin-bottom:-10000px}
 #sub:after{display:block;visibility:hidden;clear:both}
 #build-result{margin-top:50px;border:solid 1px #fcf2ed;width:70%;min-height:50px;background-color:#ff4e0d;color:#fcf2ed}
-#footer{height:footer-height;position:absolute;bottom:0}
-.toggle{cursor:pointer}
-.toggle:active{background:#210001;color:#fcf2ed}
+#footer{height:150px;position:absolute;bottom:0}
+.clickable-li{cursor:pointer}
+.clickable-li:active{background:#210001;color:#fcf2ed}
+#save-panel input,#save-panel textarea{display:block}
+#save-panel button{display:inline-block}
