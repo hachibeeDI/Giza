@@ -13,7 +13,6 @@ myapp.directive('aceEditor', (currentEditingTarget) ->
       Grobal.$editor = ace.edit("editor")
       _$editor = Grobal.$editor
       _$editor.setTheme("ace/theme/monokai")
-      scope.currentEditingTarget
       scope.$watch('target_file', (new_file, oldVar) ->
         if not new_file then return
         if not new_file.file_path then return

@@ -2,6 +2,7 @@
 myapp.controller('EditorCtrl',
   ($scope, $http, currentEditingTarget) ->
     $scope.editingFile = currentEditingTarget
+    $scope.saved = false
 
 
     @cancel = () ->
@@ -16,5 +17,14 @@ myapp.controller('EditorCtrl',
         .then (result) ->
           console.dir result
 
+    @show_save_message = () ->
+      console.log "----- clicked  #{$scope.saved} ------------------"
+      $scope.saved = true
+
+    @hide_save_message = () ->
+      console.log "----- clicked  #{$scope.saved} ------------------"
+      $scope.saved = false
+
     END
+
 )
