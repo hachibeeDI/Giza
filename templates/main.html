@@ -62,9 +62,21 @@
               >
             <li ng-click="entry.show_content(current_project.id, current_file)" class="clickable-li">[[current_file]]</li>
           </ul>
-          <h2>Editor</h2>
-          <h3>[[selected_file.name]]</h3>
-          <ace-editor></ace-editor>
+
+          <section id="editor-area" ng-controller="EditorCtrl as editor_ctrl">
+            <header class="header" role="header">
+              <h2>Editor</h2>
+              <h3>[[selected_file.file_path]]</h3>
+            </header>
+
+            <ace-editor target-file=editingFile></ace-editor>
+            <form id="save-panel" >
+              <input type="text" name="heading-message" ng-model="editingFile.headingMessage" required>
+              <textarea type="text" name="details-message" ng-model="editingFile.detailsMessage"></textarea>
+              <button ng-click="editor_ctrl.cancel()" type="button" name="cancel">Cancel</button>
+              <button ng-click="editor_ctrl.save()" type="button" name="save">Save Changes</button>
+            </form>
+          </section>
 
           <h2>Build</h2>
           <button ng-click="entry.do_build()" type="button" id="btn-build">click to build</button>

@@ -7,12 +7,22 @@ class Project
     @files = files
 
 
-myapp.factory('currentEditingTarget', () ->
+myapp.factory('currentEditingTarget', ($http) ->
   id: null
-  name: ''
+  file_path: ''
   content: ''
   headingMessage: ''
   detailsMessage: ''
+  save: () ->
+    if not (@file_path and @content)
+      throw "invalid arguments: file_path = #{@file_path}, content = #{@content}"
+    $http.post(
+      '/entry/edit/' + @id
+      {
+        file_path: @file_path
+        content: @content
+      }
+    )
 )
 
 
@@ -42,10 +52,10 @@ myapp.service('projectService',
           console.log data
           data
 
-    @get_content = (id, filepath) ->
+    @get_content = (id, file_path) ->
       $http.post(
         '/entry/' + id,
-        {'filepath': filepath}
+        {file_path: file_path}
       )
       .success (data, status, headers, config) ->
         return data.content

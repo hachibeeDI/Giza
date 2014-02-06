@@ -29,7 +29,7 @@ myapp.controller('EntryCtrl',
       projectService.get_content(id, file_path)
         .then((result) ->
           $scope.selected_file.id = id
-          $scope.selected_file.name = result.data.filepath.toString()
+          $scope.selected_file.file_path = result.data.file_path.toString()
           $scope.selected_file.content = result.data.content
         )
 

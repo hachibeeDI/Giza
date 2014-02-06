@@ -3,6 +3,7 @@ from __future__ import (print_function, division, absolute_import, unicode_liter
 
 
 '''
+TODO: JSONを受け取る際のキー操作のエラーハンドリングについて、独自例外を作る
 TODO: あまりにも操作が多くなるようならblueprintを使う or 別のフレームワークで書き直す
 '''
 
@@ -91,7 +92,7 @@ def get_entries():
 
 
 @app.route('/entry/<int:entry_id>', methods=['GET', 'POST'])
-def edit_entry(entry_id):
+def entry(entry_id):
     def GET():
         '''
         get all information of project
@@ -105,17 +106,16 @@ def edit_entry(entry_id):
 
     def POST():
         '''
-        add or edit file contained in project
         '''
         targ = Projects().get(entry_id)[0]
-        file_path = request.json['filepath']
+        file_path = request.json['file_path']
         full_path = [path for path in targ.full_files_path_as_tree() if path.endswith(file_path)][0]
         with open(full_path, 'r') as f:
             content = f.read()
         return jsonify({
             'id': targ.id,
             'name': targ.name,
-            'filepath': file_path,
+            'file_path': file_path,
             'content': content,
         })
 
@@ -123,6 +123,34 @@ def edit_entry(entry_id):
         return GET()
     elif request.method == 'POST':
         return POST()
+
+
+@app.route('/entry/edit/<int:entry_id>', methods=['POST'])
+def edit_entry(entry_id):
+    '''
+    require parameters
+    .. highlight:: json
+        {
+            'file_path': '',
+            'content': ''
+        }
+    '''
+    def POST():
+        request_params = request.json
+        targ = Projects().get(entry_id)[0]
+        file_path = request_params['file_path']
+        full_path = [path for path in targ.full_files_path_as_tree() if path.endswith(file_path)][0]
+        with open(full_path, 'w') as f:
+            print(request_params['content'])
+            f.write(request_params['content'])
+        # with open(full_path, 'r') as f:
+        #     print(f.read())
+        #     print(f.read() == request_params['content'])
+        return jsonify({
+            'id': entry_id,
+            'status': 'success',
+        })
+    return POST()
 
 
 
