@@ -77,7 +77,7 @@
               <button ng-click="editor_ctrl.save()" type="button" name="save">Save Changes</button>
             </form>
             <button ng-click="editor_ctrl.show_save_message()" type="button">aaaaaaaaa</button>
-            <growl-modal is-show=saved></growl-modal>
+            <div class="growl-modal animate-show" ng-show="saved">◆訓練な◆ これは訓練であり、実際のモーダルではない ◆備えよう◆</div>
           </section>
 
           <h2>Build</h2>
@@ -90,6 +90,7 @@
 
     <!-- <script type="text/javascript" src="/static/components/angular/angular.min.js"> 本番ではminified使う -->
     <script type="text/javascript" src="/static/components/angular/angular.js"></script>
+    <script type="text/javascript" src="/static/components/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="/static/components/ace/build/src/ace.js"></script>
     <script type="text/javascript" src="/static/app.js"></script>
     <script>

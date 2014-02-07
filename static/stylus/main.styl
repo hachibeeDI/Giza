@@ -146,10 +146,26 @@ button
   button
     display: inline-block
 
-.hidden-element
-  display: none !important
 
 .growl-modal
-  background-color: white
-  color: black
+  transition: all ease 0.5s
+  opacity: 1
+  background-color: color-middle
+  color: white
   position: fixed
+  min-width: 200px
+  min-height: 100px
+  top: 40%
+  left: 40%
+  padding: 20px
+  border: 1px solid black
+
+.growl-modal.ng-hide-add,
+.growl-modal.ng-hide-remove
+  display: block !important
+
+.growl-modal.ng-hide
+  background-color: black
+  line-height: 0
+  opacity: 0
+
