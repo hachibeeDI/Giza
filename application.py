@@ -9,7 +9,7 @@ TODO: あまりにも操作が多くなるようならblueprintを使う or 別�
 
 
 import sys
-from os import (environ, )
+from os import (environ, path, )
 
 if 'SPHINXBUILD' not in environ:
     print('you should assign $SPHINXBUILD')
@@ -20,6 +20,7 @@ from flask import (Flask, Response, render_template, jsonify, request, )
 
 from sphinx_op import build as sphinx_build
 from models.project import Projects
+from models.content import Content
 
 
 app = Flask(__name__)
@@ -106,10 +107,11 @@ def entry(entry_id):
 
     def POST():
         '''
+        TODO: 全ファイルの情報をとってこようとも思ったけど、プロジェクトがデカくなるとヘヴィな
         '''
         targ = Projects().get(entry_id)[0]
         file_path = request.json['file_path']
-        full_path = [path for path in targ.full_files_path_as_tree() if path.endswith(file_path)][0]
+        full_path = [_path for _path in targ.full_files_path_as_tree() if _path.endswith(file_path)][0]
         with open(full_path, 'r') as f:
             content = f.read()
         return jsonify({
@@ -125,9 +127,10 @@ def entry(entry_id):
         return POST()
 
 
-@app.route('/entry/edit/<int:entry_id>', methods=['POST'])
-def edit_entry(entry_id):
+@app.route('/entry/content/<int:entry_id>', methods=['POST', 'PUT', 'DELETE'])
+def content(entry_id):
     '''
+    TODO: 認証機能をつけたらここは認証必須にする？
     require parameters
     .. highlight:: json
         {
@@ -135,22 +138,26 @@ def edit_entry(entry_id):
             'content': ''
         }
     '''
+    request_params = request.json
+    content = Content(entry_id, request_params['file_path'])
+
     def POST():
-        request_params = request.json
-        targ = Projects().get(entry_id)[0]
-        file_path = request_params['file_path']
-        full_path = [path for path in targ.full_files_path_as_tree() if path.endswith(file_path)][0]
-        with open(full_path, 'w') as f:
-            print(request_params['content'])
-            f.write(request_params['content'])
-        # with open(full_path, 'r') as f:
-        #     print(f.read())
-        #     print(f.read() == request_params['content'])
-        return jsonify({
-            'id': entry_id,
-            'status': 'success',
-        })
-    return POST()
+        ''' edit contents in file '''
+        return content.edit(request_params['content'])
+
+    def PUT():
+        ''' add new file in project '''
+        return content.create(request_params['content'])
+
+    def DELETE():
+        ''' delete file in project '''
+
+    if request.method == 'POST':
+        return POST()
+    elif request.method == 'PUT':
+        return PUT()
+    elif request.method == 'DELETE':
+        return DELETE()
 
 
 
