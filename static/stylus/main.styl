@@ -81,6 +81,8 @@ button
   &:active
     // FIXME: not cool
     background-color: lighten(color-middle, 30%)
+  &:disabled
+    background-color: lighten(color-middle, 50%)
 
 
 .header
@@ -148,7 +150,7 @@ button
 
 
 .growl-modal
-  transition: all ease 0.5s
+  transition: all ease 1s
   opacity: 1
   background-color: color-middle
   color: white

@@ -2,7 +2,7 @@
 myapp.controller('EditorCtrl',
   ($scope, $http, $timeout, currentEditingTarget) ->
     $scope.editingFile = currentEditingTarget
-    $scope.saved = false
+    $scope.saving = false
 
 
     @cancel = () ->
@@ -14,13 +14,14 @@ myapp.controller('EditorCtrl',
       $scope.editingFile.content = Grobal.$editor.getSession().getValue()
       $scope.editingFile
         .save()
-        .then (result) ->
+        .then (result) =>
           console.dir result
+          @show_save_message()
 
     @show_save_message = () ->
-      $scope.saved = true
+      $scope.saving = true
       $timeout () ->
-        $scope.saved = false
+        $scope.saving = false
       , 3000
 
     END

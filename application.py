@@ -9,7 +9,7 @@ TODO: あまりにも操作が多くなるようならblueprintを使う or 別�
 
 
 import sys
-from os import (environ, path, )
+from os import (environ, )
 
 if 'SPHINXBUILD' not in environ:
     print('you should assign $SPHINXBUILD')
@@ -162,5 +162,8 @@ def content(entry_id):
 
 
 if __name__ == "__main__":
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
     app.debug = True  # enable debug while developping
     app.run()
