@@ -28,6 +28,7 @@ myapp.directive('aceEditor', (currentEditingTarget) ->
           _$editor.getSession.setMode('ace/mode/markdown')
 
         _$editor.setValue(new_file.content)
+        _$editor.clearSelection()
       , true
       )
   }
