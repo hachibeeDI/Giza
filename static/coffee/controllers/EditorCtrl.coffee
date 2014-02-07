@@ -1,6 +1,6 @@
 
 myapp.controller('EditorCtrl',
-  ($scope, $http, currentEditingTarget) ->
+  ($scope, $http, $timeout, currentEditingTarget) ->
     $scope.editingFile = currentEditingTarget
     $scope.saved = false
 
@@ -18,12 +18,10 @@ myapp.controller('EditorCtrl',
           console.dir result
 
     @show_save_message = () ->
-      console.log "----- clicked  #{$scope.saved} ------------------"
       $scope.saved = true
-
-    @hide_save_message = () ->
-      console.log "----- clicked  #{$scope.saved} ------------------"
-      $scope.saved = false
+      $timeout () ->
+        $scope.saved = false
+      , 3000
 
     END
 
