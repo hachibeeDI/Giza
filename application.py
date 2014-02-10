@@ -15,7 +15,7 @@ if 'SPHINXBUILD' not in environ:
     print('you should assign $SPHINXBUILD')
     sys.exit(2)
 
-from flask import (Flask, Response, render_template, jsonify, request, )
+from flask import (Flask, Response, jsonify, request, )
 
 
 from sphinx_op import build as sphinx_build
@@ -28,14 +28,24 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    projects = Projects()
-    return render_template('main.html', projects=projects.get_all())
+    with open('./templates/main.html', 'r') as f:
+        r = Response(f.read())
+    return r
 
 
 @app.route("/build/<int:entry_id>")
 def build(entry_id):
     result, err = sphinx_build(project_id=entry_id)
     return Response(result + '\n' + err, mimetype='text/plain')
+
+
+@app.route('/projects')
+def projects():
+    projects = Projects()
+    return jsonify({
+        'projects': projects.get_all()
+    })
+
 
 
 @app.route("/entries", methods=['GET', 'POST'])

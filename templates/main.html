@@ -14,7 +14,7 @@
     <meta name=viewport content="width=device-width,initial-scale=1.0">
     <!-- meta -->
 
-    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" type="text/css">
+    <link rel="stylesheet" href='static/main.css' type="text/css">
     <style type="text/css" media="screen">
       #editor-container {
         position: relative;
@@ -42,10 +42,10 @@
         </header>
           <!-- 後でangluarで書き直す -->
           <nav id="target-projects">
-            <ul>
-              {% for project in projects %}
+            <ul
+              ng-repeat="project in projects"
+              >
               <li ng-click="entry.chose_id({{project.id}})" class="clickable-li">{{project.name}}</li>
-              {% endfor %}
             </ul>
           </nav>
       </section> <!-- id: sub -->
@@ -53,20 +53,20 @@
       <section id="main">
         <header class="header" role="header">
           <h1 class="title">Edit</h1>
-          <h2>[[current_project.name]]</h2>
+          <h2>{{current_project.name}}</h2>
         </header>
           <!-- TODO: 数字を表示してもしゃあないので、ここはいい感じのなんかにする -->
-          <p id="entry-id">[[current_project.id]]</p>
+          <p id="entry-id">{{current_project.id}}</p>
           <ul id="project_files"
               ng-repeat="current_file in current_project.files"
               >
-            <li ng-click="entry.show_content(current_project.id, current_file)" class="clickable-li">[[current_file]]</li>
+            <li ng-click="entry.show_content(current_project.id, current_file)" class="clickable-li">{{current_file}}</li>
           </ul>
 
           <section id="editor-area" ng-controller="EditorCtrl as editor_ctrl">
             <header class="header" role="header">
               <h2>Editor</h2>
-              <h3>[[selected_file.file_path]]</h3>
+              <h3>{{selected_file.file_path}}</h3>
             </header>
 
             <ace-editor target-file=editingFile></ace-editor>
@@ -84,7 +84,7 @@
 
           <h2>Build</h2>
           <button ng-click="entry.do_build()" type="button" id="btn-build">click to build</button>
-          <pre id="build-result">[[build_result]]</pre>
+          <pre id="build-result">{{build_result}}</pre>
       </section>
     </section>
 
