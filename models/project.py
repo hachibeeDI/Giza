@@ -36,6 +36,13 @@ class Project(object):
                         path.join(root, f))
         return ret
 
+    def _asdict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'files': self.files_path_as_tree()
+        }
+
 
 class Projects(object):
     # def __init__(self, entry_id, name):

@@ -39,15 +39,6 @@ def build(entry_id):
     return Response(result + '\n' + err, mimetype='text/plain')
 
 
-@app.route('/projects')
-def projects():
-    projects = Projects()
-    return jsonify({
-        'projects': projects.get_all()
-    })
-
-
-
 @app.route("/entries", methods=['GET', 'POST'])
 def get_entries():
     '''
