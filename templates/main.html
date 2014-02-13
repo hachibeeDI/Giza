@@ -41,13 +41,30 @@
         <header class="header" role="header">
           <h1 class="title">Projects</h1>
         </header>
-          <nav id="target-projects">
-            <ul >
-            <div ng-repeat="project in whole_projects">
-              <li ng-click="entry.chose_id(project.id)" class="clickable-li">{{project.name}}</li>
-            </div>
-            </ul>
-          </nav>
+        <nav id="target-projects">
+          <ul>
+          <!--  アコーディオン式選択パネル
+                Jsを使っていないのでマークアップが複雑になってる。Directive化する？ -->
+          <div ng-repeat="project in whole_projects">
+            <label>{{project.name}}
+            <input
+              ng-click="entry.chose_id(project.id)"
+              class="accordion-gimmick"
+              name="accordion-gimmick"
+              type="radio"
+              >
+              <ul class="accordion-innner innner-files">
+                <li
+                  ng-repeat="project_file in project.files"
+                  ng-click="entry.show_content(project.id, project_file)"
+                  class="clickable-li"
+                  >{{project_file}}</li>
+              </ul>
+            </input></label>
+          <!--  アコーディオン式選択パネル -->
+          </div>
+          </ul>
+        </nav>
       </div>
       </section> <!--        #sub          -->
 
