@@ -6,6 +6,11 @@ myapp.controller('EntryCtrl',
     $scope.current_project = null
     $scope.build_result = ''
     $scope.selected_file = currentEditingTarget
+    #TODO: これはモデルにもっていく？
+    projectService
+      .get_projects()
+      .then (result) ->
+        $scope.whole_projects = result.data.entries
 
     @chose_id = (entry_id) ->
       '''

@@ -46,6 +46,24 @@ myapp.service('projectService',
       .error (data, status, headers, config) ->
         return data
 
+    @get_projects = (limit=0) ->
+      $http
+          method: 'GET'
+          url: '/entries'
+          params: {}
+        .success (data, status, headers, config) ->
+          if limit == 0
+            (new Project(proj.id, proj.name, proj.files) for proj in data.entries)
+          else
+            (
+              new Project(proj.id, proj.name, proj.files) for proj in data.projects
+            )[0..limit]
+
+        .error (data, status, headers, config) ->
+          alert('error!')
+          console.log data
+          data
+
     @get_project = (id) ->
       $http
           method: 'GET'

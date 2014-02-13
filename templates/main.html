@@ -40,15 +40,12 @@
         <header class="header" role="header">
           <h1 class="title">Projects</h1>
         </header>
-          <!-- 後でangluarで書き直す -->
           <nav id="target-projects">
-            <ul
-              ng-repeat="project in projects"
-              >
-              <li ng-click="entry.chose_id({{project.id}})" class="clickable-li">{{project.name}}</li>
+            <ul ng-repeat="project in whole_projects">
+              <li ng-click="entry.chose_id(project.id)" class="clickable-li">{{project.name}}</li>
             </ul>
           </nav>
-      </section> <!-- id: sub -->
+      </section> <!--        #sub          -->
 
       <section id="main">
         <header class="header" role="header">
@@ -84,13 +81,13 @@
             </form>
             <button ng-click="editor_ctrl.show_save_message()" ng-disabled="saving" type="button">aaaaaaaaa</button>
             <div class="growl-modal animate-show" ng-show="saving">◆訓練な◆ これは訓練であり、実際のモーダルではない ◆備えよう◆</div>
-          </section>
+          </section> <!--      #editor-area       -->
 
           <h2>Build</h2>
           <button ng-click="entry.do_build()" type="button" id="btn-build">click to build</button>
           <pre id="build-result">{{build_result}}</pre>
-      </section>
-    </section>
+      </section>  <!--     #main      -->
+    </section> <!--     #main-content    -->
 
     <footer id="footer"></footer>
 
