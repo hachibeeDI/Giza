@@ -73,10 +73,14 @@
             <form id="save-panel" >
               <input type="text" name="heading-message" ng-model="editingFile.headingMessage" required>
               <textarea type="text" name="details-message" ng-model="editingFile.detailsMessage"></textarea>
-              <button ng-disabled="saving" ng-click="editor_ctrl.cancel()" type="button" name="cancel">Cancel</button>
+              <button ng-disabled="saving"
+                      ng-click="editor_ctrl.cancel()"
+                      type="button"
+                      name="cancel">Cancel</button>
               <button ng-disabled="saving"
                       ng-click="editor_ctrl.save()"
-                      type="button" name="save">Save Changes</button>
+                      type="button"
+                      name="save">Save Changes</button>
             </form>
             <button ng-click="editor_ctrl.show_save_message()" ng-disabled="saving" type="button">aaaaaaaaa</button>
             <div class="growl-modal animate-show" ng-show="saving">◆訓練な◆ これは訓練であり、実際のモーダルではない ◆備えよう◆</div>

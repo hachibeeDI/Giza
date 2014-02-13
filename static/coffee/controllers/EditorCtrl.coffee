@@ -6,8 +6,7 @@ myapp.controller('EditorCtrl',
 
 
     @cancel = () ->
-      $scope.editingFile.headingMessage = ''
-      $scope.editingFile.detailsMessage = ''
+      $scope.editingFile.clear_commitment()
 
     @save = () ->
       # aceのオブザーバーにセットしたほうが良いかな？

@@ -5,8 +5,6 @@ myapp.directive('aceEditor', (currentEditingTarget) ->
     templateUrl: 'static/templates/aceEditor.html'
     replace: true
     restrict: 'E'
-    transclude: true
-    #scope: true  # current_file だけ取り入れる方法がうまくいかねえ
     scope:
       target_file: '=targetFile'
     link: (scope, element) ->
