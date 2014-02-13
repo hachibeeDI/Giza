@@ -38,6 +38,11 @@ body
 
   font-size-em 1.7
 
+input
+  font-size-em 1.7
+
+textarea
+  font-size-em 1.7
 
 h1
   font-size-em 3.8
@@ -156,13 +161,21 @@ button
   background: black
   color: white
 
+
 #save-panel
   input[name="heading-message"]
     margin-top: 30px
     display: block
+    max-width: 400px
+    min-width: 280px
+    width: 65%
   textarea[name="details-message"]
     margin-top: 10px
     display: block
+    max-width: 600px
+    min-width: 320px
+    width: 80%
+    height: unit(15 * 3 + 25, 'px')
   .buttons
     margin: 20px auto
     button
