@@ -37,14 +37,18 @@
   <body>
     <section ng-controller="EntryCtrl as entry" id="main-content">
       <section id="sub">
+      <div id="sub-container">
         <header class="header" role="header">
           <h1 class="title">Projects</h1>
         </header>
           <nav id="target-projects">
-            <ul ng-repeat="project in whole_projects">
+            <ul >
+            <div ng-repeat="project in whole_projects">
               <li ng-click="entry.chose_id(project.id)" class="clickable-li">{{project.name}}</li>
+            </div>
             </ul>
           </nav>
+      </div>
       </section> <!--        #sub          -->
 
       <section id="main">
@@ -52,51 +56,50 @@
           <h1 class="title">Edit</h1>
           <h2>{{current_project.name}}</h2>
         </header>
-          <!-- TODO: 数字を表示してもしゃあないので、ここはいい感じのなんかにする -->
-          <p id="entry-id">{{current_project.id}}</p>
-          <ul id="project_files"
+          <ul id="project_files" >
+            <li
               ng-repeat="current_file in current_project.files"
-              >
-            <li ng-click="entry.show_content(current_project.id, current_file)" class="clickable-li">{{current_file}}</li>
+              ng-click="entry.show_content(current_project.id, current_file)"
+              class="clickable-li">{{current_file}}</li>
           </ul>
 
           <section id="editor-area" ng-controller="EditorCtrl as editor_ctrl">
             <header class="header" role="header">
-              <h2>Editor</h2>
-              <h3>{{selected_file.file_path}}</h3>
+              <h2>{{selected_file.file_path}}</h2>
             </header>
 
-            <ace-editor target-file=editingFile></ace-editor>
+            <ace-editor target-file=editingFile ng-show="selected_file.file_path"></ace-editor>
             <form id="save-panel" >
               <input type="text" name="heading-message" ng-model="editingFile.headingMessage" required>
               <textarea type="text" name="details-message" ng-model="editingFile.detailsMessage"></textarea>
-              <button ng-disabled="saving"
-                      ng-click="editor_ctrl.cancel()"
-                      type="button"
-                      name="cancel">Cancel</button>
-              <button ng-disabled="saving"
-                      ng-click="editor_ctrl.save()"
-                      type="button"
-                      name="save">Save Changes</button>
+              <div class="buttons">
+                <button ng-disabled="saving"
+                        ng-click="editor_ctrl.cancel()"
+                        type="button"
+                        name="cancel">Cancel</button>
+                <button ng-disabled="saving"
+                        ng-click="editor_ctrl.save()"
+                        type="button"
+                        name="save">Save Changes</button>
+              </div>
             </form>
-            <button ng-click="editor_ctrl.show_save_message()" ng-disabled="saving" type="button">aaaaaaaaa</button>
-            <div class="growl-modal animate-show" ng-show="saving">◆訓練な◆ これは訓練であり、実際のモーダルではない ◆備えよう◆</div>
+            <div class="growl-modal animate-show" ng-show="saving">Saving... ...</div>
           </section> <!--      #editor-area       -->
 
           <h2>Build</h2>
           <button ng-click="entry.do_build()" type="button" id="btn-build">click to build</button>
           <pre id="build-result">{{build_result}}</pre>
-      </section>  <!--     #main      -->
-    </section> <!--     #main-content    -->
+        </section>  <!--     #main      -->
+      </section> <!--     #main-content    -->
 
-    <footer id="footer"></footer>
+      <footer id="footer"></footer>
 
-    <!-- <script type="text/javascript" src="/static/components/angular/angular.min.js"> 本番ではminified使う -->
-    <script type="text/javascript" src="/static/components/angular/angular.js"></script>
-    <script type="text/javascript" src="/static/components/angular-animate/angular-animate.min.js"></script>
-    <script type="text/javascript" src="/static/components/ace/build/src/ace.js"></script>
-    <script type="text/javascript" src="/static/app.js"></script>
-    <script>
-    </script>
-  </body>
-</html>
+      <!-- <script type="text/javascript" src="/static/components/angular/angular.min.js"> 本番ではminified使う -->
+        <script type="text/javascript" src="/static/components/angular/angular.js"></script>
+        <script type="text/javascript" src="/static/components/angular-animate/angular-animate.min.js"></script>
+        <script type="text/javascript" src="/static/components/ace/build/src/ace.js"></script>
+        <script type="text/javascript" src="/static/app.js"></script>
+        <script>
+        </script>
+      </body>
+    </html>

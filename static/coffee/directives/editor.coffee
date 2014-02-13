@@ -10,7 +10,8 @@ myapp.directive('aceEditor', (currentEditingTarget) ->
     link: (scope, element) ->
       Grobal.$editor = ace.edit("editor")
       _$editor = Grobal.$editor
-      _$editor.setTheme("ace/theme/monokai")
+      # _$editor.setTheme("ace/theme/monokai")
+      _$editor.setTheme("ace/theme/solarized_light")
       # 80文字の目印ラインを消す
       _$editor.setShowPrintMargin(false)
       scope.$watch('target_file', (new_file, oldVar) ->
