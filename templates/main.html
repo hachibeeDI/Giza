@@ -55,9 +55,9 @@
               type="radio"
               >
               <ul class="accordion-innner project-operation">
-                <li class="icon-config" ng-click=""></li>
+                <li class="clickable-li icon-config" ng-click=""></li>
                 <!-- TODO: better icon -->
-                <li class="icon-spam" ng-click="entry.do_build()"></li>
+                <li class="clickable-li icon-spam" ng-click="entry.do_build()"></li>
               </ul>
               <ul class="accordion-innner innner-files">
                 <li
@@ -106,12 +106,18 @@
                         name="save">Save Changes</button>
               </div>
             </form>
-            <div class="growl-modal animate-show" ng-show="saving">Saving... ...</div>
+            <div class="growl-modal boxlike animate-show" ng-show="saving">Saving... ...</div>
           </section> <!--      #editor-area       -->
 
-          <h2>Build</h2>
-          <button ng-click="entry.do_build()" type="button" id="btn-build">click to build</button>
-          <pre id="build-result">{{build_result}}</pre>
+          <!-- TODO: Directive化したい -->
+          <div
+            id="build-result"
+            class="growl-modal beltlike animate-show"
+            ng-show="show_build_status" >
+            <label class="icon-close-alt modal-close-button">
+              <input class="invisible" type="checkbox" ng-model="show_build_status"></label>
+            <pre>{{build_result}}</pre>
+          </div>
         </section>  <!--     #main      -->
       </section> <!--     #main-content    -->
 

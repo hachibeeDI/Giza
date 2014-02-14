@@ -140,10 +140,12 @@ button
 #build-result
   margin-top: 50px
   border: solid 1px white
-  width: 70%
   min-height: 50px
   background-color: color-middle
   color: white
+  pre
+    width: 80%
+    margin: auto
 
 
 #footer
@@ -203,7 +205,6 @@ input.accordion-gimmick:checked
   background: black
   color: white
 
-
 #save-panel
   input[name="heading-message"]
     margin-top: 30px
@@ -232,12 +233,7 @@ input.accordion-gimmick:checked
   background-color: color-middle
   color: white
   position: fixed
-  min-width: 200px
-  min-height: 100px
-  top: 40%
-  left: 40%
-  padding: 20px
-  border: 1px solid black
+  border: 1px solid color-high
 
 .growl-modal.ng-hide-add,
 .growl-modal.ng-hide-remove
@@ -248,6 +244,27 @@ input.accordion-gimmick:checked
   line-height: 0
   opacity: 0
 
+.boxlike
+  min-width: 200px
+  min-height: 100px
+  top: 40%
+  left: 40%
+  padding: 20px
+
+.beltlike
+  width: 100%
+  min-height: 100px
+  top: 40%
+  left: 0%
+  padding: 20px 0
+  margin: auto
+
+
+.invisible
+  display: none
+
+.modal-close-button:before
+  padding-left: 10px
 
 ::-moz-selection
     background: color-accent
