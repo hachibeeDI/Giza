@@ -4,13 +4,14 @@ END = null
 myapp.controller('EntryCtrl',
   ($scope, $http, projectService, currentEditingTarget) ->
     $scope.current_project = null
-    $scope.build_result = ''
     $scope.selected_file = currentEditingTarget
     #TODO: これはモデルにもっていく？
     projectService
       .get_projects()
       .then (result) ->
         $scope.whole_projects = result.data.entries
+    $scope.build_result = ''
+
 
     @chose_id = (entry_id) ->
       '''
@@ -26,17 +27,19 @@ myapp.controller('EntryCtrl',
 
 
     @do_build = () ->
-      if angular.isNumber $scope.entry_id then return
-      $scope.build_result = projectService.build($scope.entry_id)
+      $scope.show_build_status = true
+      if not angular.isNumber $scope.current_project.id then return
+      projectService.build($scope.current_project.id)
+        .then (result) ->
+          $scope.build_result = result.data
 
 
     @show_content = (id, file_path) ->
       projectService.get_content(id, file_path)
-        .then((result) ->
+        .then (result) ->
           $scope.selected_file.id = id
           $scope.selected_file.file_path = result.data.file_path.toString()
           $scope.selected_file.content = result.data.content
-        )
 
     END
 )
