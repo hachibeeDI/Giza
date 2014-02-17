@@ -17,8 +17,23 @@ class Project(object):
         self.name = name
         # TODO: 名前の重複が出来ないのはダサいので複数のプロジェクトルートを持てるようにする
         self._root = path.abspath(path.join(PROJECTS_ROOT, PATH_TO_PROJECT, name))
+        self._files = None
+        self._configfile = None
 
-    def files_path_as_tree(self):
+    @property
+    def files(self):
+        if not self._files:
+            self._files = self._files_path_as_tree()
+        return self._files
+
+    @property
+    def configfile(self):
+        if not self._configfile:
+            self._configfile = [_path for _path in self._files if _path.endswith('conf.py')][0]
+        return self._configfile
+
+
+    def _files_path_as_tree(self):
         my_root_dir = self._root
         return [pth.replace(my_root_dir, '') for pth in self.full_files_path_as_tree()]
 
@@ -40,7 +55,8 @@ class Project(object):
         return {
             'id': self.id,
             'name': self.name,
-            'files': self.files_path_as_tree()
+            'files': self.files,
+            'conf': self.configfile
         }
 
 

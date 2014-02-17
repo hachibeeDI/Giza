@@ -100,11 +100,12 @@ def entry(entry_id):
         get all information of project
         '''
         targ = Projects().get(entry_id)[0]
-        return jsonify(
-            id=targ.id,
-            name=targ.name,
-            files=targ.files_path_as_tree()
-        )
+        return jsonify({
+            'id': targ.id,
+            'name': targ.name,
+            'files': targ.files,
+            'conf': targ.configfile,
+        })
 
     def POST():
         '''
