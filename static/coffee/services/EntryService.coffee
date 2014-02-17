@@ -9,7 +9,6 @@ class Project
 
 
 myapp.factory('currentEditingTarget', ($http) ->
-  EDITOR: Grobal.$editor
   id: null
   file_path: ''
   content: ''
@@ -32,10 +31,8 @@ myapp.factory('currentEditingTarget', ($http) ->
     )
 
   clear_commitment: () ->
-    console.log @
     @headingMessage = ''
     @detailsMessage = ''
-    @EDITOR.clearSelection()
 )
 
 

@@ -22,14 +22,16 @@
         width: 90%;
         min-height: 800px;
       }
-      #editor {
+      .ace_editor {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-        font-size: 1.8em;
-        font-size: 1.8rem;
+        font-size: 1.7em !important;
+        font-size: 1.7rem !important;
+        height: 800px;
+        width: 100%;
       }
     </style>
 
@@ -91,7 +93,11 @@
               <h2>{{selected_file.file_path}}</h2>
             </header>
 
-            <ace-editor target-file=editingFile ng-show="selected_file.file_path"></ace-editor>
+            <section id="editor-container">
+              <div
+                ui-ace="aceOption"
+                ng-model="editingFile.content" ></div>
+            </section>
             <form id="save-panel" >
               <input type="text" name="heading-message" ng-model="editingFile.headingMessage" required>
               <textarea type="text" name="details-message" ng-model="editingFile.detailsMessage"></textarea>
