@@ -1,10 +1,11 @@
 'use strict'
 
 class Project
-  constructor: (id, name, files) ->
+  constructor: (id, name, files, conf) ->
     @id = id
     @name = name
     @files = files
+    @conf = conf
 
 
 myapp.factory('currentEditingTarget', ($http) ->
@@ -14,6 +15,11 @@ myapp.factory('currentEditingTarget', ($http) ->
   content: ''
   headingMessage: ''
   detailsMessage: ''
+  set_project: (proj, content) ->
+    @id = proj.id
+    @name = proj.name
+    @content = content
+    @clear_commitment()
   save: () ->
     if not (@file_path and @content)
       throw "invalid arguments: file_path = #{@file_path}, content = #{@content}"
@@ -26,6 +32,7 @@ myapp.factory('currentEditingTarget', ($http) ->
     )
 
   clear_commitment: () ->
+    console.log @
     @headingMessage = ''
     @detailsMessage = ''
     @EDITOR.clearSelection()
@@ -53,10 +60,10 @@ myapp.service('projectService',
           params: {}
         .success (data, status, headers, config) ->
           if limit == 0
-            (new Project(proj.id, proj.name, proj.files) for proj in data.entries)
+            (new Project(proj.id, proj.name, proj.files, proj.conf) for proj in data.entries)
           else
             (
-              new Project(proj.id, proj.name, proj.files) for proj in data.projects
+              new Project(proj.id, proj.name, proj.files, proj.conf) for proj in data.projects
             )[0..limit]
 
         .error (data, status, headers, config) ->
@@ -70,7 +77,7 @@ myapp.service('projectService',
           url: '/entry/' + id
           params: {}
         .success (data, status, headers, config) ->
-          new Project(data.id, data.name, data.files)
+          new Project(data.id, data.name, data.files, data.conf)
         .error (data, status, headers, config) ->
           alert('error!')
           console.log data

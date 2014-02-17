@@ -41,6 +41,9 @@ myapp.controller('EntryCtrl',
           $scope.selected_file.file_path = result.data.file_path.toString()
           $scope.selected_file.content = result.data.content
 
+    @show_conf = (project) ->
+      @show_content(project.id, project.conf)
+
     END
 )
 
