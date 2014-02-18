@@ -41,41 +41,35 @@ myapp.service('projectService',
   ($http) ->
     @build = (id) ->
       if not(id == 0 or id) then return 'error'
-      $http
-        method: 'GET'
-        url: '/build/' + id  # urljoinみたいなのある？
-        params: {}
-      .success (data, status, headers, config) ->
-        return data
-      .error (data, status, headers, config) ->
-        return data
+      $http.get("/build/#{id}")
+        .then (data, status, headers, config) ->
+          return data
+        , (data, status, headers, config) ->
+          console.log "build failed => #{data}"
+          return data
 
     @get_projects = (limit=0) ->
-      $http
-          method: 'GET'
-          url: '/entries'
-          params: {}
-        .success (data, status, headers, config) ->
+      $http.get('/entries')
+        .then (result) ->
+          data = result.data
           if limit == 0
             (new Project(proj.id, proj.name, proj.files, proj.conf) for proj in data.entries)
           else
             (
-              new Project(proj.id, proj.name, proj.files, proj.conf) for proj in data.projects
+              new Project(proj.id, proj.name, proj.files, proj.conf) for proj in data.entries
             )[0..limit]
 
-        .error (data, status, headers, config) ->
+        , (result) ->
           alert('error!')
-          console.log data
-          data
+          result
 
     @get_project = (id) ->
-      $http
-          method: 'GET'
-          url: '/entry/' + id
-          params: {}
-        .success (data, status, headers, config) ->
+      $http.get("/entry/#{id}")
+        .then (result) ->
+          data = result.data
           new Project(data.id, data.name, data.files, data.conf)
-        .error (data, status, headers, config) ->
+        , (result) ->
+          data = result.data
           alert('error!')
           console.log data
           data

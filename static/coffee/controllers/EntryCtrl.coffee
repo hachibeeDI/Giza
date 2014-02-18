@@ -9,7 +9,7 @@ myapp.controller('EntryCtrl',
     projectService
       .get_projects()
       .then (result) ->
-        $scope.whole_projects = result.data.entries
+        $scope.whole_projects = result
     $scope.build_result = ''
 
 
@@ -20,18 +20,20 @@ myapp.controller('EntryCtrl',
       '''
       if not(entry_id == 0 or entry_id) then return
 
-      project = projectService.get_project(entry_id)
-      project.then (result) ->
-        data = result.data
-        $scope.current_project = data
+      projectService.get_project(entry_id)
+        .then (result) ->
+          $scope.current_project = result
 
 
     @do_build = () ->
-      $scope.show_build_status = true
-      if not angular.isNumber $scope.current_project.id then return
+      if not angular.isNumber $scope.current_project.id
+        $scope.show_build_status = true
+        $scope.build_result = '!! failed to build !!'
+        return
       projectService.build($scope.current_project.id)
         .then (result) ->
-          $scope.build_result = result.data
+          $scope.show_build_status = true
+          $scope.build_result = result
 
 
     @show_content = (id, file_path) ->
