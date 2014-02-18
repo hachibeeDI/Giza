@@ -6,6 +6,23 @@ class Project
     @name = name
     @files = files
     @conf = conf
+  get_files_as_tree: () =>
+    root = {}
+    paths_each_dir = @files.map((file) -> file.split('/').filter((file) -> file != ''))
+    for path_each_dir in paths_each_dir
+      first_node_name = path_each_dir.shift()
+      if first_node_name not of root
+        root[first_node_name] = {}
+      node = root[first_node_name]
+      while path_each_dir.length > 0
+        node_name = path_each_dir.shift()
+        is_last_element = path_each_dir.length == 0
+        if is_last_element
+          node[node_name] = node_name
+        else if node_name not of node
+          node[node_name] = {}
+        node = node[node_name]
+    return root
 
 
 myapp.factory('currentEditingTarget', ($http) ->
