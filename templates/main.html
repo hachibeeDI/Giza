@@ -66,7 +66,9 @@
                   ng-repeat="project_file in project.files"
                   ng-click="entry.show_content(project.id, project_file)"
                   class="icon-pen edit-list clickable-li"
-                  >{{project_file}}</li>
+                  >
+                  <span class="project-files" data-full_path="{{project_file}}">{{project_file | extractFilename}}</span>
+                </li>
               </ul>
             </input></label>
           <!--  アコーディオン式選択パネル -->

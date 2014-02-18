@@ -9,7 +9,8 @@
 //color-middle = #FF4E0D
 
 // via: https://kuler.adobe.com/HPIP-MOOC-color-theme-3454163/
-white = #FFDFAE
+white = #FDF6E3
+base-color = #FFDFAE
 black = #262626
 color-second-base = #60988D
 color-accent = #DF2809
@@ -17,6 +18,7 @@ color-high = #33123F
 color-middle = #453D6E
 
 footer-height = 150px
+subcontent-width-max = 350px
 
 
 font-size-em(font_size)
@@ -33,7 +35,7 @@ html
   font-size: 62.5%
 
 body
-  background-color: white
+  background-color: base-color
   color: black
 
   font-size-em 1.7
@@ -69,7 +71,7 @@ li
   line-height: 2.5rem
   list-style-type: none
   letter-spacing: 0.2rem
-  //border-bottom: solid 1px white
+  //border-bottom: solid 1px base-color
 
 
 //a
@@ -87,9 +89,9 @@ button
   font-size-em 1.5
   padding: 10px 20px
   background-color: black
-  color: white
+  color: base-color
   font-weight: bold
-  border: solid 1px white
+  border: solid 1px base-color
   &:hover
     //color: color-linkhover
   &:active
@@ -121,14 +123,15 @@ button
 
 #sub
   margin: 0 auto
-  width: 20%
+  max-width: subcontent-width-max
+  width: 30%
   float: left
   background-color: black
-  color: white
+  color: base-color
   padding-bottom: 10000px
   margin-bottom: -10000px
   .title
-    color: white !important
+    color: base-color !important
 #sub-container
   margin-left: 20px
 
@@ -139,10 +142,10 @@ button
 
 #build-result
   margin-top: 50px
-  border: solid 1px white
+  border: solid 1px base-color
   min-height: 50px
   background-color: color-middle
-  color: white
+  color: base-color
   pre
     width: 80%
     margin: auto
@@ -157,7 +160,7 @@ button
 //[class^="icon-"]:before
 .edit-list:before
   color: color-high
-  background-color: white
+  background-color: base-color
   border-radius: 20px
   margin-right: 15px !important
 
@@ -203,7 +206,38 @@ input.accordion-gimmick:checked
   cursor: pointer
 .clickable-li:active
   background: black
-  color: white
+  color: base-color
+
+.project-files
+  position: relative
+  width: subcontent-width-max - 50px
+  &:hover
+    width: 0
+  &:after
+    position: absolute
+    content: attr(data-full_path)
+    overflow: hidden
+    width: 0
+    color: base-color
+    left: 0
+    transition-property: box-shadow, padding, top
+    transition-duration: 0.2s
+    transition-timing-function: ease-in
+    top: 0
+    padding: 0
+    box-shadow: 0px 0px 0px rgba(color-second-base, 0.1)
+  &:hover:after
+    padding: 5px 8px
+    display: inline
+    box-shadow: 2px 2px 4px rgba(color-second-base, 0.5)
+    width: auto
+    top: -6px
+    left: 0
+    background-color: color-middle
+    color: white
+    z-index: 998
+    white-space: nowrap
+
 
 #save-panel
   input[name="heading-message"]
@@ -231,7 +265,7 @@ input.accordion-gimmick:checked
   transition: all ease 1s
   opacity: 1
   background-color: color-middle
-  color: white
+  color: base-color
   position: fixed
   z-index: 999
   border: 1px solid color-high
@@ -269,8 +303,8 @@ input.accordion-gimmick:checked
 
 ::-moz-selection
     background: color-accent
-    color: white
+    color: base-color
 
 ::selection
     background: color-accent
-    color: white
+    color: base-color
