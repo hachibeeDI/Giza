@@ -7,6 +7,13 @@ from os import (path, listdir, walk, )
 from env import (PROJECTS_ROOT, PATH_TO_PROJECT, )
 
 
+_RESERVED_DIR_NAME = ['build', '_build', 'extension']
+
+
+def _exclude_unsource_dirs(files):
+    return [f for f in files if f.split(path.sep)[1] not in _RESERVED_DIR_NAME]
+
+
 class Project(object):
     '''
     TODO: ここは後でSQLAlchemyのモデルとして定義する
@@ -23,7 +30,7 @@ class Project(object):
     @property
     def files(self):
         if not self._files:
-            self._files = self._files_path_as_tree()
+            self._files = _exclude_unsource_dirs(self._files_path_as_tree())
         return self._files
 
     @property
@@ -38,7 +45,7 @@ class Project(object):
         return [pth.replace(my_root_dir, '') for pth in self.full_files_path_as_tree()]
 
     def full_files_path_as_tree(self):
-        IGNORE_DIRS = [path.join(self._root, d) for d in ['build', '_build']]
+        IGNORE_DIRS = [path.join(self._root, d) for d in _RESERVED_DIR_NAME]
 
         ret = []
         yield_ret = ret.append
