@@ -1,6 +1,3 @@
-
-END = null
-
 myapp.controller('EntryCtrl',
   ($scope, $http, projectService, currentEditingTarget) ->
     $scope.current_project = null
