@@ -23,7 +23,7 @@ myapp.controller('EntryCtrl',
 
 
     @do_build = () ->
-      if not angular.isNumber $scope.current_project.id
+      if not($scope.current_project and angular.isNumber $scope.current_project.id)
         $scope.show_build_status = true
         $scope.build_result = '!! failed to build !!'
         return
