@@ -7,6 +7,7 @@ module.exports = (grunt)->
         'static/coffee/*.coffee'
         'static/coffee/*/*.coffee'
         'static/stylus/*.styl'
+        'test/spec/*.coffee'
       ]
       tasks: ['coffee', 'stylus']
 
@@ -14,6 +15,8 @@ module.exports = (grunt)->
       compile:
         options:
           bare: true
+          sourceMap: true,
+          sourceMapDir: 'static/'
         files: [
           'static/app.js': [
             'static/coffee/app.coffee'
@@ -22,6 +25,7 @@ module.exports = (grunt)->
             'static/coffee/directives/*.coffee'
             'static/coffee/filters/*.coffee'
           ]
+          'test/spec/BaseSpec.js': 'test/spec/*.coffee'
         ]
 
     stylus:
@@ -32,9 +36,14 @@ module.exports = (grunt)->
           'static/main.css': 'static/stylus/main.styl'
           'static/genericons.css': 'static/stylus/genericons.styl'
 
+    karma:
+      unit:
+        configFile: 'karma.conf.js'
+      tasks: ['coffee']
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-stylus'
+  grunt.loadNpmTasks 'grunt-karma'
   grunt.registerTask 'default', ['watch']
   return
