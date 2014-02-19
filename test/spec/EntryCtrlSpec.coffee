@@ -34,6 +34,7 @@ describe "EntryCtrl", () ->
     $httpBackend.expectGET('/entries')
       .respond __prepare_dummy_projects()
 
+
   __prepare_dummy_projects =  ->
     entry_datas = {
       entries: [
@@ -71,6 +72,11 @@ describe "EntryCtrl", () ->
     expect(scope.current_project).toBe(null)
     controller.do_build()
     expect(scope.build_result).toBe('!! failed to build !!')
+
+  it 'should failed when invalid id is selected',  ->
+    expect(scope.current_project).toBe(null)
+    controller.chose_id(null)
+    expect(scope.current_project).toBe(null)
 
   it 'should indecate file when selected',  ->
     _define_mock_for_chose_project()

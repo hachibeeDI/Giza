@@ -51,3 +51,11 @@ describe "EditorCtrl", () ->
     controller.save()
     $httpBackend.flush()
     expect(scope.saving).toBe(true)
+
+  describe 'message window', ->
+    it 'should hidden automatically after message showed',  ->
+      expect(scope.saving).toBe(false)
+      controller.show_save_message()
+      expect(scope.saving).toBe(true)
+      timeout.flush()
+      expect(scope.saving).toBe(false)

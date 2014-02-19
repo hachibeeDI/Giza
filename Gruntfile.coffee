@@ -39,7 +39,7 @@ module.exports = (grunt)->
     karma:
       unit:
         configFile: 'karma.conf.js'
-      tasks: ['coffee']
+        background: true
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
