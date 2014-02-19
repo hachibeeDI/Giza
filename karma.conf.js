@@ -18,6 +18,7 @@ module.exports = function(config) {
       'static/components/ace/build/src/ace.js',
       'static/components/angular-animate/angular-animate.min.js',
       'static/components/angular-ui-ace/ui-ace.min.js',
+      'static/components/angular-animate/angular-animate.min.js',
       'static/components/angular-mocks/angular-mocks.js',
       'static/app.js',
       'test/spec/*.js'
