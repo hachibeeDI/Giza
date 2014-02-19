@@ -6,6 +6,10 @@ class Project
     @name = name
     @files = files
     @conf = conf
+  equals: (other) =>
+    has_samefile = (other.files + '') == (@files + '')  # JavaScript sucks
+    has_samefile and other.id == @id and other.name == @name and other.conf == @conf
+
   get_files_as_tree: () =>
     root = {}
     paths_each_dir = @files.map((file) -> file.split('/').filter((file) -> file != ''))
