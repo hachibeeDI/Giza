@@ -15,8 +15,8 @@ module.exports = (grunt)->
       compile:
         options:
           bare: true
-          sourceMap: true,
-          sourceMapDir: 'static/'
+          #sourceMap: true,
+          #sourceMapDir: 'static/'
         files: [
           'static/app.js': [
             'static/coffee/app.coffee'
