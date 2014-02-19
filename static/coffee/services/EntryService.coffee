@@ -40,7 +40,7 @@ myapp.factory('currentEditingTarget', ($http) ->
     if not (@file_path and @content)
       throw "invalid arguments: file_path = #{@file_path}, content = #{@content}"
     $http.post(
-      '/entry/content/' + @id
+      "/entry/content/#{@id}"
       {
         file_path: @file_path
         content: @content
