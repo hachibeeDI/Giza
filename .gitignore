@@ -1,3 +1,8 @@
+# Project specific
+static/main.css
+static/genericons.css
+static/app.js
+
 # Created by http://www.gitignore.io
 
 ### Python ###
@@ -90,4 +95,4 @@ build
 .grunt
 
 node_modules
-
+*.js.map
