@@ -9,7 +9,7 @@ TODO: あまりにも操作が多くなるようならblueprintを使う or 別�
 
 
 import sys
-from os import (environ, )
+from os import (environ, path, )
 
 if 'SPHINXBUILD' not in environ:
     print('you should assign $SPHINXBUILD')
@@ -29,6 +29,18 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     with open('./templates/main.html', 'r') as f:
+        r = Response(f.read())
+    return r
+
+
+@app.route("/previews/<path:filename>")
+def previews(filename):
+    '''
+    This routing is in order to local debuging.
+    So you should setup the web server is suite for serving static files(e.g. Apache, Nginx... ... ).
+    '''
+    ROOT = './projects/'
+    with open(path.join(ROOT, filename), 'r') as f:
         r = Response(f.read())
     return r
 
