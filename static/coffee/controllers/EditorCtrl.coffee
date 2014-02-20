@@ -11,7 +11,7 @@ myapp.controller('EditorCtrl',
       onLoad: (_ace) ->
         $scope.$watch 'editingFile.file_path', () ->
           _path = $scope.editingFile.file_path
-          if not editingFile.file_path then return
+          if not($scope.editingFIle and $scope.editingFile.file_path) then return
           _filename = switch
             when _path.match(/\.py$/) then 'python'
             when _path.match(/\.rst$/) then 'markdown'
