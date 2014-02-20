@@ -23,7 +23,7 @@ class Project(object):
         self.id = entry_id
         self.name = name
         # TODO: 名前の重複が出来ないのはダサいので複数のプロジェクトルートを持てるようにする
-        self._root = path.abspath(path.join(PROJECTS_ROOT, PATH_TO_PROJECT, name))
+        self.root = path.abspath(path.join(PROJECTS_ROOT, PATH_TO_PROJECT, name))
         self._files = None
         self._configfile = None
 
@@ -41,15 +41,15 @@ class Project(object):
 
 
     def _files_path_as_tree(self):
-        my_root_dir = self._root
+        my_root_dir = self.root
         return [pth.replace(my_root_dir, '') for pth in self.full_files_path_as_tree()]
 
     def full_files_path_as_tree(self):
-        IGNORE_DIRS = [path.join(self._root, d) for d in _RESERVED_DIR_NAME]
+        IGNORE_DIRS = [path.join(self.root, d) for d in _RESERVED_DIR_NAME]
 
         ret = []
         yield_ret = ret.append
-        for root, dirs, files in walk(self._root):
+        for root, dirs, files in walk(self.root):
             for f in files:
                 if any(f.startswith(ignore) for ignore in IGNORE_DIRS):
                     continue
