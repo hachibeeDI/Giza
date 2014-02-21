@@ -19,8 +19,7 @@ from flask import (Flask, Response, jsonify, request, )
 
 
 from sphinx_op import build as sphinx_build
-from models.project import Projects
-from models.content import Content
+from models import (Projects, Content, make_image, )
 
 
 app = Flask(__name__)
@@ -173,6 +172,18 @@ def content(entry_id):
     elif request.method == 'DELETE':
         return DELETE()
 
+
+@app.route('/entry/<int:entry_id>/image', methods=['POST', 'DELETE'])
+def image(entry_id):
+    request_params = request.json
+    image64_as_url = request_params['content']
+    image_filename = request_params['image_name']
+
+    def POST():
+        return make_image(entry_id).create(image64_as_url, image_filename)
+
+    if request.method == 'POST':
+        return POST()
 
 
 if __name__ == "__main__":
