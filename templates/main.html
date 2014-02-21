@@ -109,10 +109,18 @@
                         type="button"
                         name="cancel">Cancel</button>
                 <button ng-disabled="saving"
-                        ng-click="editor_ctrl.save()"
-                        type="button"
+                        ng-submit="editor_ctrl.save()"
+                        type="submit"
                         name="save">Save Changes</button>
               </div>
+            </form>
+            <form
+              method=post enctype=multipart/form-data
+              ng-show="editingFile.file_path"
+              ng-submit="editor_ctrl.save_image()" novalidate>
+                <input type=file fileread="image_form">
+                <input type=text ng-model="image_form.name">
+                <input type=submit name="send" >
             </form>
             <div class="growl-modal boxlike animate-show" ng-show="saving">Saving... ...</div>
           </section> <!--      #editor-area       -->
