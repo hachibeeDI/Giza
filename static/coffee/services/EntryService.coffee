@@ -50,8 +50,13 @@ myapp.factory('currentEditingTarget', ($http) ->
         content: @content
       }
     )
+  clear:  ->
+    @id = null
+    @file_path = ''
+    @content = null
+    @clear_commitment()
 
-  clear_commitment: () ->
+  clear_commitment:  ->
     @headingMessage = ''
     @detailsMessage = ''
 )
@@ -100,10 +105,10 @@ myapp.service('projectService',
         '/entry/' + id,
         {file_path: file_path}
       )
-      .success (data, status, headers, config) ->
-        return data.content
-      .error (data, status, headers, config) ->
-        alert('error!')
+        .then (result) ->
+          result.data
+        , (result) ->
+          alert('error!')
 
     return
 )

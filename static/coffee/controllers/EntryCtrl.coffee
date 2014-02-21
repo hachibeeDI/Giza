@@ -16,10 +16,12 @@ myapp.controller('EntryCtrl',
       TODO: cache function
       '''
       if not(entry_id == 0 or entry_id) then return
+      if $scope.current_project and $scope.current_project.id == entry_id then return
 
       projectService.get_project(entry_id)
         .then (result) ->
           $scope.current_project = result
+          $scope.selected_file.clear()
 
 
     @do_build = () ->
@@ -35,10 +37,10 @@ myapp.controller('EntryCtrl',
 
     @show_content = (id, file_path) ->
       projectService.get_content(id, file_path)
-        .then (result) ->
+        .then (data) ->
           $scope.selected_file.id = id
-          $scope.selected_file.file_path = result.data.file_path.toString()
-          $scope.selected_file.content = result.data.content
+          $scope.selected_file.file_path = data.file_path.toString()
+          $scope.selected_file.content = data.content
 
     @show_conf = (project) ->
       @show_content(project.id, project.conf)
