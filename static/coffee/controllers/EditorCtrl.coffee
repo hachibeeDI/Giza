@@ -1,8 +1,9 @@
 
 myapp.controller('EditorCtrl',
-  ($scope, $http, $timeout, currentEditingTarget) ->
+  ($scope, $http, $timeout, currentEditingTarget, imageService) ->
     $scope.editingFile = currentEditingTarget
     $scope.saving = false
+    $scope.image_form = {name: '', content: null}
     $scope.aceOption =
       useWrapMode : true
       showGutter: false
@@ -35,6 +36,12 @@ myapp.controller('EditorCtrl',
       $timeout () ->
         $scope.saving = false
       , 3000
+
+    @save_image =  ->
+      console.log $scope.editingFile
+      imageService.save_image($scope.editingFile.id, $scope.image_form)
+        .then (result) ->
+          console.log result
 
     END
 
